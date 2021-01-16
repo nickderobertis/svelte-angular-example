@@ -4,12 +4,23 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Web site created using create-snowpack-app" />
+    <meta
+      name="description"
+      content="Web site created using create-snowpack-app"
+    />
     <title>Snowpack App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script type="module" src="/dist/index.js"></script>
+    <!-- <script type="module" src="/dist/index.js"></script> -->
+    <script type="module" src="/dist/Small.svelte.js"></script>
+    <script type="module">
+      import Small from "/dist/Small.svelte.js";
+      var small = new Small({
+        target: document.body,
+      });
+    </script>
+    <p>Yeah!!!!!!!!!</p>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
