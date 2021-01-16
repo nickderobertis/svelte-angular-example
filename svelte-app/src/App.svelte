@@ -1,5 +1,6 @@
 <script lang="typescript">
   import { onMount } from "svelte";
+  import Small from "./Small.svelte";
   let count: number = 0;
   onMount(() => {
     const interval = setInterval(() => count++, 1000);
@@ -10,6 +11,7 @@
 </script>
 
 <div class="App">
+  <Small myVar="100" />
   <header class="App-header">
     <img src="/logo.svg" class="App-logo" alt="logo" />
     <p>Edit <code>src/App.svelte</code> and save to reload!</p>
