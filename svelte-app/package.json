@@ -2,7 +2,8 @@
   "scripts": {
     "start": "snowpack dev",
     "build": "snowpack build",
-    "test": "web-test-runner \"src/**/*.test.ts\""
+    "test": "web-test-runner \"src/**/*.test.ts\"",
+    "serve-prod": "http-server ./build"
   },
   "dependencies": {
     "svelte": "^3.31.2"
@@ -18,6 +19,7 @@
     "@types/snowpack-env": "^2.3.2",
     "@web/test-runner": "^0.12.0",
     "chai": "^4.2.0",
+    "http-server": "^0.12.3",
     "snowpack": "^3.0.1",
     "svelte-preprocess": "^4.0.8",
     "typescript": "^4.0.0"
