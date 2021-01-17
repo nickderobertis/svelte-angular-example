@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   title = 'ng-app';
   svelteApp: Small;
   inpValue: number = 100;
+  appClicks: number = 0;
 
   constructor(public elRef: ElementRef, public renderer: Renderer2) {}
 
@@ -24,9 +25,16 @@ export class AppComponent implements OnInit {
         myVar: this.inpValue,
       },
     });
+    this.svelteApp.$on('smallEvent', (event: CustomEvent) => {
+      this.onSmallEvent(event);
+    });
   }
 
   onFormChange(value: number) {
     this.svelteApp.$set({ myVar: value });
+  }
+
+  onSmallEvent(event: CustomEvent) {
+    this.appClicks = event.detail.numClicks;
   }
 }
