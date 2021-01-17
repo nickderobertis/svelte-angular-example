@@ -25,4 +25,8 @@ export class AppComponent implements OnInit {
       },
     });
   }
+
+  onFormChange(value: number) {
+    this.svelteApp.$set({ myVar: value });
+  }
 }

@@ -1,3 +1,7 @@
 <p>it works!</p>
-<input type="number" [(ngModel)]="inpValue" />
+<input
+  type="number"
+  [(ngModel)]="inpValue"
+  (ngModelChange)="onFormChange($event)"
+/>
 <p>Angular value: {{ inpValue }}</p>
