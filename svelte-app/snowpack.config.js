@@ -8,6 +8,15 @@ module.exports = {
     '@snowpack/plugin-svelte',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
+    [
+      '@snowpack/plugin-webpack',
+      {
+        extendConfig: (config) => {
+          console.log(config);
+          return config;
+        }
+      }
+    ],
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
