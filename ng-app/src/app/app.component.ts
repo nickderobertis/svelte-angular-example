@@ -9,6 +9,7 @@ import Small from '../../../svelte-app/build/dist/Small.svelte';
 export class AppComponent implements OnInit {
   title = 'ng-app';
   svelteApp: Small;
+  inpValue: number = 100;
 
   constructor(public elRef: ElementRef, public renderer: Renderer2) {}
 
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit {
     el.appendChild(newElem);
     this.svelteApp = new Small({
       target: newElem,
+      props: {
+        myVar: this.inpValue,
+      },
     });
   }
 }
