@@ -1,3 +1,6 @@
+import type { SvelteComponentDev } from "svelte/internal";
+import type { ISvelteComponent } from "./ext.svelte.interface";
+
 export interface ISmall {
   myVar: number;
   extraContent?: string;
@@ -14,4 +17,8 @@ export class SmallModel implements ISmall {
       this.extraContent = args.extraContent;
     }
   }
+}
+
+export interface ISmallComponent extends ISvelteComponent {
+  props?: { model: SmallModel };
 }
