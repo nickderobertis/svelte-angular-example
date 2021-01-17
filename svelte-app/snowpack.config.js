@@ -16,6 +16,17 @@ function modifyWebpackConfig(config) {
   // Include an entry point for the standalone component
   config.entry['use-small'] = path.resolve(__dirname, "build", "dist", "use-small.js")
 
+  // Remove output hashing from JS
+  config.output.filename = 'js/[name].js'
+
+  // Remove output hashing from CSS
+  const miniCssExtractPlugin = config.plugins[0];
+  if (!miniCssExtractPlugin.options.filename === 'css/[name].[contenthash].css') {
+    throw new Error('tried to modify CSS output config but first plugin options was not for CSS output')
+  }
+  miniCssExtractPlugin.options.filename = 'css/[name].css'
+  miniCssExtractPlugin.options.chunkFilename = 'css/[name].css'
+
   // Log the config
   console.log(JSON.stringify(config, null, 2));
   return config;
