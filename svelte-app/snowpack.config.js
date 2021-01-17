@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   mount: {
@@ -12,6 +14,7 @@ module.exports = {
       '@snowpack/plugin-webpack',
       {
         extendConfig: (config) => {
+          config.entry['use-small'] = path.resolve(__dirname, "build", "dist", "use-small.js")
           console.log(config);
           return config;
         }
