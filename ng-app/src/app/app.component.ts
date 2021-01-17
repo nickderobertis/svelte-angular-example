@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import Small from '../../../svelte-app/build/dist/Small.svelte';
+import { SmallModel } from '../../../svelte-app/src/small.model';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
     this.svelteApp = new Small({
       target: newElem,
       props: {
-        myVar: this.inpValue,
+        model: this.smallModel,
       },
     });
     this.svelteApp.$on('smallEvent', (event: CustomEvent) => {
@@ -30,8 +31,17 @@ export class AppComponent implements OnInit {
     });
   }
 
+  get smallModel(): SmallModel {
+    return new SmallModel({
+      myVar: this.inpValue,
+      extraContent: '<p>angular + svelte rocks<p>',
+    });
+  }
+
   onFormChange(value: number) {
-    this.svelteApp.$set({ myVar: value });
+    this.svelteApp.$set({
+      model: this.smallModel,
+    });
   }
 
   onSmallEvent(event: CustomEvent) {

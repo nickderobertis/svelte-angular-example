@@ -1,7 +1,8 @@
 <script lang="typescript">
   import { createEventDispatcher } from "svelte";
+  import { SmallModel } from "./small.model";
 
-  export let myVar: number = 10;
+  export let model: SmallModel = new SmallModel({ myVar: 10 });
   let numClicks: number = 0;
 
   const dispatch = createEventDispatcher();
@@ -19,8 +20,11 @@
 </script>
 
 <div class="wrapper">
-  <p>My variable is {myVar}. Number of clicks is {numClicks}</p>
+  <p>My variable is {model.myVar}. Number of clicks is {numClicks}</p>
   <button on:click={onClick}>Click me</button>
+  {#if model.extraContent}
+    {@html model.extraContent}
+  {/if}
 </div>
 
 <style>
