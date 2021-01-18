@@ -1,4 +1,3 @@
-import type { SvelteComponentDev } from "svelte/internal";
 import type { ISvelteComponent } from "./ext.svelte.interface";
 
 export interface ISmall {

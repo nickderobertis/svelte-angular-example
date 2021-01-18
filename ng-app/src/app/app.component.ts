@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { SvelteComponentDev } from 'svelte/internal';
 import Small from '../../../svelte-app/build/dist/Small.svelte';
 import {
   ISmallComponent,
@@ -12,7 +13,7 @@ import {
 })
 export class AppComponent implements OnInit {
   title = 'ng-app';
-  svelteApp: Small;
+  svelteApp: SvelteComponentDev;
   inpValue: number = 100;
   appClicks: number = 0;
 
