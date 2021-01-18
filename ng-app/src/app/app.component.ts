@@ -13,6 +13,7 @@ import Small from '../../../svelte-app/build/dist/Small.svelte';
 import {
   ISmallComponent,
   SmallModel,
+  SmallEvent,
 } from '../../../svelte-app/src/small.model';
 import { SvelteComponent } from './svelte/svelte.component';
 
@@ -34,7 +35,7 @@ export class AppComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit() {
-    this.smallRef.on('smallEvent', (event: CustomEvent) => {
+    this.smallRef.on('smallEvent', (event: SmallEvent) => {
       this.onSmallEvent(event);
     });
   }
@@ -46,7 +47,7 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  onSmallEvent(event: CustomEvent) {
+  onSmallEvent(event: SmallEvent) {
     this.appClicks = event.detail.numClicks;
   }
 }
