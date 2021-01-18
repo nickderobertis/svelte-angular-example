@@ -19,8 +19,6 @@ import { SvelteComponentDev } from 'svelte/internal';
 export class SvelteComponent implements OnInit, OnDestroy, OnChanges {
   @Input() component: typeof SvelteComponentDev;
   @Input() props: object = {};
-  @Input() listenEvents: string[] = [];
-  @Output() woo = new EventEmitter();
   instance: SvelteComponentDev;
 
   constructor(public elRef: ElementRef, public renderer: Renderer2) {
@@ -32,23 +30,10 @@ export class SvelteComponent implements OnInit, OnDestroy, OnChanges {
     const newElem: HTMLDivElement = this.renderer.createElement('div');
     el.appendChild(newElem);
     this.instance = new this.component({ target: newElem, props: this.props });
-    this._registerOutputs();
   }
 
-  _registerOutputs() {
-    for (const eventName of this.listenEvents) {
-      (this as any)[eventName] = new EventEmitter();
-      Output()(this, eventName);
-
-      console.log('event emitter', (this as any)[eventName]);
-      console.log('event emitter', new EventEmitter());
-      console.log('woo', this.woo);
-
-      this.instance.$on(eventName, (event: CustomEvent) => {
-        console.log('fired', eventName);
-        (this as any)[eventName].emit(event.detail);
-      });
-    }
+  on(eventName: string, callback: (event: CustomEvent) => void) {
+    this.instance.$on(eventName, callback);
   }
 
   ngOnChanges() {

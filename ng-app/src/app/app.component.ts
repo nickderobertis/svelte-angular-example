@@ -1,9 +1,12 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
   Renderer2,
+  ViewChild,
 } from '@angular/core';
 import { SvelteComponentDev } from 'svelte/internal';
 import Small from '../../../svelte-app/build/dist/Small.svelte';
@@ -11,13 +14,14 @@ import {
   ISmallComponent,
   SmallModel,
 } from '../../../svelte-app/src/small.model';
+import { SvelteComponent } from './svelte/svelte.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = 'ng-app';
   smallClass: typeof SvelteComponentDev = Small;
   model: SmallModel = new SmallModel({
@@ -25,8 +29,15 @@ export class AppComponent {
     extraContent: '<p>angular + svelte rocks<p>',
   });
   appClicks: number = 0;
+  @ViewChild(SvelteComponent) smallRef: SvelteComponent;
 
-  constructor(public elRef: ElementRef, public renderer: Renderer2) {}
+  constructor() {}
+
+  ngAfterViewInit() {
+    this.smallRef.on('smallEvent', (event: CustomEvent) => {
+      this.onSmallEvent(event);
+    });
+  }
 
   onFormChange(value: number) {
     this.model = new SmallModel({
@@ -36,7 +47,6 @@ export class AppComponent {
   }
 
   onSmallEvent(event: CustomEvent) {
-    console.log('got event', event);
     this.appClicks = event.detail.numClicks;
   }
 }
