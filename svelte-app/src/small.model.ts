@@ -21,3 +21,11 @@ export class SmallModel implements ISmall {
 export interface ISmallComponent extends ISvelteComponent {
   props?: { model: SmallModel };
 }
+
+export interface SmallEventData {
+  numClicks: number;
+}
+
+export interface SmallEvent extends CustomEvent {
+  detail: SmallEventData;
+}

@@ -1,65 +1,53 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
   Renderer2,
+  ViewChild,
 } from '@angular/core';
 import { SvelteComponentDev } from 'svelte/internal';
 import Small from '../../../svelte-app/build/dist/Small.svelte';
 import {
   ISmallComponent,
   SmallModel,
+  SmallEvent,
 } from '../../../svelte-app/src/small.model';
+import { SvelteComponent } from './svelte/svelte.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements AfterViewInit {
   title = 'ng-app';
-  svelteApp: SvelteComponentDev;
-  inpValue: number = 100;
+  smallClass: typeof SvelteComponentDev = Small;
+  model: SmallModel = new SmallModel({
+    myVar: 100,
+    extraContent: '<p>angular + svelte rocks<p>',
+  });
   appClicks: number = 0;
+  @ViewChild(SvelteComponent) smallRef: SvelteComponent;
 
-  constructor(public elRef: ElementRef, public renderer: Renderer2) {}
+  constructor() {}
 
-  ngOnInit() {
-    const el: HTMLElement = this.elRef.nativeElement;
-    const newElem: HTMLDivElement = this.renderer.createElement('div');
-    newElem.id = 'svelte';
-    el.appendChild(newElem);
-    const componentData: ISmallComponent = {
-      target: newElem,
-      props: {
-        model: this.smallModel,
-      },
-    };
-    this.svelteApp = new Small(componentData);
-    this.svelteApp.$on('smallEvent', (event: CustomEvent) => {
+  ngAfterViewInit() {
+    this.smallRef.on('smallEvent', (event: SmallEvent) => {
       this.onSmallEvent(event);
     });
   }
 
-  get smallModel(): SmallModel {
-    return new SmallModel({
-      myVar: this.inpValue,
+  onFormChange(value: number) {
+    this.model = new SmallModel({
+      myVar: this.model.myVar,
       extraContent: '<p>angular + svelte rocks<p>',
     });
   }
 
-  onFormChange(value: number) {
-    this.svelteApp.$set({
-      model: this.smallModel,
-    });
-  }
-
-  onSmallEvent(event: CustomEvent) {
+  onSmallEvent(event: SmallEvent) {
     this.appClicks = event.detail.numClicks;
-  }
-
-  ngOnDestroy() {
-    this.svelteApp.$destroy();
   }
 }

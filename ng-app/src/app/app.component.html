@@ -1,8 +1,12 @@
 <p>it works!</p>
 <input
   type="number"
-  [(ngModel)]="inpValue"
+  [(ngModel)]="model.myVar"
   (ngModelChange)="onFormChange($event)"
 />
-<p>Angular value: {{ inpValue }}</p>
+<p>Angular value: {{ model.myVar }}</p>
 <p>Angular num clicks: {{ appClicks }}</p>
+<app-svelte
+  [component]="smallClass"
+  [props]="{ model: this.model }"
+></app-svelte>
