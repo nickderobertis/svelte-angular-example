@@ -1,6 +1,6 @@
 <script lang="typescript">
   import { createEventDispatcher } from "svelte";
-  import { SmallEventData, SmallModel } from "./small.model";
+  import { SmallModel } from "./small.model";
   import { numClicks } from "./stores";
 
   export let model: SmallModel = new SmallModel({ myVar: 10 });
@@ -8,7 +8,7 @@
   const dispatch = createEventDispatcher();
 
   function reportEvent() {
-    const data: SmallEventData = { numClicks: $numClicks };
+    const data = { numClicks: $numClicks };
     dispatch("smallEvent", data);
   }
 
