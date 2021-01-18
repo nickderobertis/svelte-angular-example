@@ -1,25 +1,25 @@
 <script lang="typescript">
   import { createEventDispatcher } from "svelte";
   import { SmallEventData, SmallModel } from "./small.model";
+  import { numClicks } from "./stores";
 
   export let model: SmallModel = new SmallModel({ myVar: 10 });
-  let numClicks: number = 0;
 
   const dispatch = createEventDispatcher();
 
   function reportEvent() {
-    const data: SmallEventData = { numClicks: numClicks };
+    const data: SmallEventData = { numClicks: $numClicks };
     dispatch("smallEvent", data);
   }
 
   function onClick() {
-    numClicks++;
+    $numClicks++;
     reportEvent();
   }
 </script>
 
 <div class="wrapper">
-  <p>My variable is {model.myVar}. Number of clicks is {numClicks}</p>
+  <p>My variable is {model.myVar}. Number of clicks is {$numClicks}</p>
   <button on:click={onClick}>Click me</button>
   {#if model.extraContent}
     {@html model.extraContent}
