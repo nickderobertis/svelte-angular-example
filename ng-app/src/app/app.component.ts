@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { SvelteComponentDev } from 'svelte/internal';
 import Small from '../../../svelte-app/build/dist/Small.svelte';
 import {
@@ -11,7 +17,7 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'ng-app';
   svelteApp: SvelteComponentDev;
   inpValue: number = 100;
@@ -51,5 +57,9 @@ export class AppComponent implements OnInit {
 
   onSmallEvent(event: CustomEvent) {
     this.appClicks = event.detail.numClicks;
+  }
+
+  ngOnDestroy() {
+    this.svelteApp.$destroy();
   }
 }
